@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quake.API.Models.Feature
 import com.example.quake.databinding.CellBinding
 
-class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder>() {
+class EarthquakeAdapter(private val features: List<Feature>, private val onClickListener: OnClickListener): RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder>() {
 
     //View holder inner class
     inner class EarthquakeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,9 +33,17 @@ class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapt
     override fun onBindViewHolder(holder: EarthquakeViewHolder, position: Int) {
         val feature: Feature = features[position]
         holder.bind(feature)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(feature)
+
+        }
     }
 
     override fun getItemCount(): Int {
         return features.size
+    }
+
+    class OnClickListener(val clickListener: (feature: Feature) -> Unit) {
+        fun onClick(feature: Feature) = clickListener(feature)
     }
 }
