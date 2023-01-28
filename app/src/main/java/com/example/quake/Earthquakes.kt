@@ -1,27 +1,18 @@
 package com.example.quake
 
-import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.quake.API.APIService
 import com.example.quake.API.Models.Feature
-import com.example.quake.API.Models.Geometry
-import com.example.quake.API.Models.Property
 import com.example.quake.databinding.ActivityEarthquakesBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class Earthquakes : AppCompatActivity(), OnQueryTextListener {
 
