@@ -1,8 +1,15 @@
-import java.util.*
+package com.example.quake
 
-class EarthquakeDetail {
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 
-    private var title: String
+class EarthquakeDetail : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_earthquake_detail)
+    }
+
+    /*private var title: String
     private var place: String?
     private var time: Date
     private var tsunami: Int
@@ -26,7 +33,6 @@ class EarthquakeDetail {
         this.coords = coords
         this.depth = depth
         this.magnitude = magnitude
-    }
-
+    }*/
 
 }
