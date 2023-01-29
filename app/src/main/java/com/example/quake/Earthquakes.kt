@@ -6,9 +6,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.quake.API.APIService
 import com.example.quake.API.Models.Feature
+import com.example.quake.TabBar.TabPageAdapter
 import com.example.quake.databinding.ActivityEarthquakesBinding
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.activity_earthquakes.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +31,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         setContentView(binding.root)
         binding.searchView.setOnQueryTextListener(this)
         initRecyclerView()
+        setUpTabBar()
         getLastEarthquakes()
     }
 
@@ -38,6 +43,29 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         })
         binding.rvList.layoutManager = LinearLayoutManager(this)
         binding.rvList.adapter = earthquakeAdapter
+    }
+
+    private fun setUpTabBar() {
+        val tabPageAdapter = TabPageAdapter(this, tabLayout.tabCount)
+        viewPager.adapter = tabPageAdapter
+
+        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                tabLayout.selectTab(tabLayout.getTabAt(position))
+            }
+        })
+
+        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewPager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
     private fun getRetrofit(): Retrofit {
