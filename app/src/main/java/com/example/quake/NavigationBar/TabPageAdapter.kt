@@ -1,4 +1,4 @@
-package com.example.quake.TabBar
+package com.example.quake.NavigationBar
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

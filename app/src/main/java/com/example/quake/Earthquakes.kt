@@ -2,17 +2,18 @@ package com.example.quake
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.quake.API.APIService
 import com.example.quake.API.Models.Feature
-import com.example.quake.TabBar.TabPageAdapter
 import com.example.quake.databinding.ActivityEarthquakesBinding
-import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_earthquakes.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,14 +26,28 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
     private lateinit var earthquakeAdapter: EarthquakeAdapter
     private val featureList = mutableListOf<Feature>()
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEarthquakesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.searchView.setOnQueryTextListener(this)
         initRecyclerView()
-        setUpTabBar()
+        //setUpTabBar()
+
+        //Set up NavBar
+        val navHostFragment = supportFragmentManager.findFragmentById(com.example.quake.R.id.mainContainer) as NavHostFragment
+        navController = navHostFragment.navController
+        val bottomNavigationView = findViewById<BottomNavigationView>(com.example.quake.R.id.bottomNavigationView)
+        setupWithNavController(bottomNavigationView, navController)
+
         getLastEarthquakes()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(com.example.quake.R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun initRecyclerView() {
@@ -45,7 +60,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         binding.rvList.adapter = earthquakeAdapter
     }
 
-    private fun setUpTabBar() {
+    /*private fun setUpTabBar() {
         val tabPageAdapter = TabPageAdapter(this, tabLayout.tabCount)
         viewPager.adapter = tabPageAdapter
 
@@ -66,7 +81,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-    }
+    }*/
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
