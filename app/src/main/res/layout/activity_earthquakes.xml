@@ -13,28 +13,6 @@
         android:layout_height="match_parent"
         tools:context=".Earthquakes">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="7dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:queryHint="Search by date" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvList"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainContainer"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -48,7 +26,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:navGraph="@navigation/nav_graph">
-
         </androidx.fragment.app.FragmentContainerView>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,7 +33,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:menu="@menu/menu"
-            android:background="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

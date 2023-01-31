@@ -1,6 +1,5 @@
 package com.example.quake
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
@@ -32,8 +31,8 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         super.onCreate(savedInstanceState)
         binding = ActivityEarthquakesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.searchView.setOnQueryTextListener(this)
-        initRecyclerView()
+        //binding.searchView.setOnQueryTextListener(this)
+        //initRecyclerView()
         //setUpTabBar()
 
         //Set up NavBar
@@ -42,23 +41,19 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         val bottomNavigationView = findViewById<BottomNavigationView>(com.example.quake.R.id.bottomNavigationView)
         setupWithNavController(bottomNavigationView, navController)
 
-        getLastEarthquakes()
+        //getLastEarthquakes()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(com.example.quake.R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
-    }
+    }*/
 
-    private fun initRecyclerView() {
-        earthquakeAdapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
-            val intent = Intent(this, EarthquakeDetail::class.java)
-            //TODO: Pasar los datos del feature desde aquí??
-            startActivity(intent)
-        })
+    /*private fun initRecyclerView() {
+        earthquakeAdapter = EarthquakeAdapter(featureList)
         binding.rvList.layoutManager = LinearLayoutManager(this)
         binding.rvList.adapter = earthquakeAdapter
-    }
+    }*/
 
     /*private fun setUpTabBar() {
         val tabPageAdapter = TabPageAdapter(this, tabLayout.tabCount)
@@ -83,7 +78,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         })
     }*/
 
-    private fun getRetrofit(): Retrofit {
+    /*private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://earthquake.usgs.gov/fdsnws/event/1/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -128,7 +123,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
                 }
             }
         }
-    }
+    }*/
 
     private fun showError() {
         Toast.makeText(this, "There was an error.", Toast.LENGTH_SHORT).show()
@@ -137,7 +132,7 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()) {
             //TODO: Revisar
-            searchByDate("", "", 1, 1)
+            //searchByDate("", "", 1, 1)
         }
         return true
     }
