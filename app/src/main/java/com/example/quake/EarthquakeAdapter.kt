@@ -15,7 +15,6 @@ class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapt
 
         fun bind(feature: Feature) {
             binding.cellTitle.text =  feature.properties.title
-            println("Binding!!!!")
 
             /*if (feature.properties.title != null) {
                 binding.cellTitle.text = feature.properties.title
