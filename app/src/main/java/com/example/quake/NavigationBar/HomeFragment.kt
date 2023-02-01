@@ -12,6 +12,7 @@ import com.example.quake.API.Models.Feature
 import com.example.quake.EarthquakeAdapter
 import com.example.quake.R
 import com.example.quake.databinding.ActivityEarthquakesBinding
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ class HomeFragment : Fragment() {
     private val featureList = mutableListOf<Feature>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EarthquakeAdapter
-    private lateinit var binding: ActivityEarthquakesBinding
+    //private lateinit var binding: ActivityEarthquakesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,8 +51,8 @@ class HomeFragment : Fragment() {
         //TODO: Pruebas
         //binding = ActivityEarthquakesBinding.inflate(layoutInflater)
         //layout.setContentView(this.binding.root)
-        /*binding.searchView.setOnQueryTextListener(this)
-        initRecyclerView()*/
+        /*binding.searchView.setOnQueryTextListener(this)*/
+        initRecyclerView()
 
         getLastEarthquakes()
 
@@ -67,15 +68,15 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    /*private fun initRecyclerView() {
-        earthquakeAdapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
+    private fun initRecyclerView() {
+        /*adapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
             val intent = Intent(this, EarthquakeDetail::class.java)
             //TODO: Pasar los datos del feature desde aquí??
             startActivity(intent)
-        })
-        binding.rvList.layoutManager = LinearLayoutManager(this)
-        binding.rvList.adapter = earthquakeAdapter
-    }*/
+        })*/
+        rvList.layoutManager = LinearLayoutManager(context)
+        rvList.adapter = adapter
+    }
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -91,7 +92,7 @@ class HomeFragment : Fragment() {
             val call = getRetrofit().create(APIService::class.java).getEarthquakes("query?format=geojson&starttime=2023-01-01&endtime=2023-01-05")
 
             val features = call.body()
-            runOnUiThread {
+            /*runOnUiThread {
                 if (call.isSuccessful) {
                     val features: List<Feature> = features?.features ?: emptyList()
                     featureList.clear()
@@ -100,7 +101,17 @@ class HomeFragment : Fragment() {
                 } else {
                     showError()
                 }
-            }
+            }*/
+            activity?.runOnUiThread(Runnable {
+                if (call.isSuccessful) {
+                    val features: List<Feature> = features?.features ?: emptyList()
+                    featureList.clear()
+                    featureList.addAll(features)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    showError()
+                }
+            })
         }
     }
 
@@ -111,6 +122,8 @@ class HomeFragment : Fragment() {
             val call = getRetrofit().create(APIService::class.java).getEarthquakes("query?format=geojson&starttime=2023-01-01&endtime=2023-01-05")
 
             val features = call.body()
+
+            /*
             runOnUiThread {
                 if (call.isSuccessful) {
                     val features: List<Feature> = features?.features ?: emptyList()
@@ -121,6 +134,19 @@ class HomeFragment : Fragment() {
                     showError()
                 }
             }
+             */
+            activity?.runOnUiThread(Runnable {
+                if (call.isSuccessful) {
+                    val features: List<Feature> = features?.features ?: emptyList()
+                    featureList.clear()
+                    featureList.addAll(features)
+                    adapter.notifyDataSetChanged()
+                } else {
+                    showError()
+                }
+            })
+
+
         }
     }
 
@@ -145,6 +171,7 @@ class HomeFragment : Fragment() {
 private fun CoroutineScope.runOnUiThread(function: () -> Unit) {
     //TODO: Revisar !!
 }
+
 
 // To navigate to another fragment
 //findNavController().navigate(R.id.fragmentName)

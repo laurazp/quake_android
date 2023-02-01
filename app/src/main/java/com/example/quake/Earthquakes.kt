@@ -29,8 +29,8 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEarthquakesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setUpBinding()
+
         //binding.searchView.setOnQueryTextListener(this)
         //initRecyclerView()
         //setUpTabBar()
@@ -42,6 +42,13 @@ class Earthquakes : AppCompatActivity(), OnQueryTextListener {
         setupWithNavController(bottomNavigationView, navController)
 
         //getLastEarthquakes()
+    }
+
+    fun setUpBinding() {
+        binding = ActivityEarthquakesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //binding.searchView.setOnQueryTextListener(this)
+        //initRecyclerView()
     }
 
     /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {

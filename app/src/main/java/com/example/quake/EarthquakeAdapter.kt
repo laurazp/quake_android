@@ -33,6 +33,7 @@ class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapt
     override fun onBindViewHolder(holder: EarthquakeViewHolder, position: Int) {
         val feature: Feature = features[position]
         holder.bind(feature)
+        println("Binding!!")
         holder.itemView.setOnClickListener {
             //onClickListener.onClick(feature)
 
