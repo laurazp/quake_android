@@ -27,6 +27,12 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EarthquakeAdapter
 
+    /*var listener: ((feature: Feature) -> Unit)? = null
+
+    fun sendCategoryToListener(feature: Feature) {
+        listener?.invoke(feature)
+    }*/
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -127,16 +133,16 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
     }
 
     override fun recyclerviewClick(position: Int) {
-        //Inicio prueba: Carga de Earthquake Detail
-
         //To navigate to another fragment (--> EarthquakeDetail?)
         //findNavController().navigate(R.id.fragmentName)
 
-        //adapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
         val intent = Intent (getActivity(), EarthquakeDetail::class.java)
+        //Send data to EarthquakeDetail activity
+        val selectedEarthquake: Feature = featureList[position]
+        intent.putExtra("EARTHQUAKE_TITLE", selectedEarthquake.properties.title)
+        //TODO: Pasar todo el feature?
+        //intent.putExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
         getActivity()?.startActivity(intent)
-        //})
-        //Fin prueba: Carga de Earthquake Detail
         adapter.notifyDataSetChanged()
     }
 
