@@ -3,10 +3,12 @@ package com.example.quake
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quake.Formatters.GetSimplifiedTitleFormatter
 import java.util.*
 
 class EarthquakeDetail : AppCompatActivity() {
 
+    private val titleFormatter = GetSimplifiedTitleFormatter()
     private var title: String? = "Unknown"
     private var place: String? = "Unknown"
     private lateinit var time: Date
@@ -19,19 +21,21 @@ class EarthquakeDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earthquake_detail)
 
-        bindEarthquake()
+        //TODO: Get feature data from HomeFragment
+        val extras = intent.extras
+        this.title = extras?.getString("EARTHQUAKE_TITLE")
 
         val display = supportActionBar
-        //TODO: Cambiar title por título del terremoto
-        display?.title = "Earthquake Detail"
+        val formattedTitle = titleFormatter.getSimplifiedTitle(this.title, "Place")
+        display?.title = formattedTitle
         display?.setDisplayHomeAsUpEnabled(true)
+
+        bindEarthquake()
     }
 
     private fun bindEarthquake() {
+        //TODO: Configurar datos
 
-        val extras = intent.extras
-        this.title = extras?.getString("EARTHQUAKE_TITLE")
-        println(this.title)
 
         /*val fragment = HomeFragment()
         fragment.listener = { feature ->
