@@ -31,13 +31,37 @@
             android:id="@+id/cellPlace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Place" />
 
         <TextView
             android:id="@+id/cellDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/cellTsunami"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tsunami" />
+
+        <TextView
+            android:id="@+id/cellCoords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Coords" />
+
+        <TextView
+            android:id="@+id/cellDepth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Depth" />
+
+        <TextView
+            android:id="@+id/cellMagnitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Magnitude" />
 
     </LinearLayout>
     </androidx.cardview.widget.CardView>
