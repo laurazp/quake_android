@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quake.API.Models.Feature
 import com.example.quake.databinding.CellBinding
 
-class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder>() {
+class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerViewOnClickListener): RecyclerView.Adapter<EarthquakeAdapter.EarthquakeViewHolder>() {
+
+    private var listener: RecyclerViewOnClickListener = listener
 
     //View holder inner class
-    inner class EarthquakeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val binding = CellBinding.bind(view)
+    inner class EarthquakeViewHolder(view: View, listener: RecyclerViewOnClickListener) : RecyclerView.ViewHolder(view) {
 
+        private val binding = CellBinding.bind(view)
+        private var listener: RecyclerViewOnClickListener = listener
+
+        //Binding method
         fun bind(feature: Feature) {
             binding.cellTitle.text =  feature.properties.title
 
@@ -26,16 +31,15 @@ class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EarthquakeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return EarthquakeViewHolder(layoutInflater.inflate(R.layout.cell, parent, false))
+        return EarthquakeViewHolder(layoutInflater.inflate(R.layout.cell, parent, false), listener)
     }
 
     override fun onBindViewHolder(holder: EarthquakeViewHolder, position: Int) {
         val feature: Feature = features[position]
         holder.bind(feature)
-        println("Binding!!")
         holder.itemView.setOnClickListener {
             //onClickListener.onClick(feature)
-
+            this.listener.recyclerviewClick(position)
         }
     }
 
@@ -43,7 +47,7 @@ class EarthquakeAdapter(private val features: List<Feature>): RecyclerView.Adapt
         return features.size
     }
 
-    class OnClickListener(val clickListener: (feature: Feature) -> Unit) {
+    /*class OnClickListener(val clickListener: (feature: Feature) -> Unit) {
         fun onClick(feature: Feature) = clickListener(feature)
-    }
+    }*/
 }

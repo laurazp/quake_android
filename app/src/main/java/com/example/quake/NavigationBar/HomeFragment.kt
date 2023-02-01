@@ -1,7 +1,9 @@
 package com.example.quake.NavigationBar
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
@@ -10,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.quake.API.APIService
 import com.example.quake.API.Models.Feature
 import com.example.quake.EarthquakeAdapter
+import com.example.quake.EarthquakeDetail
 import com.example.quake.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.example.quake.RecyclerViewOnClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListener {
 
     private val featureList = mutableListOf<Feature>()
     private lateinit var recyclerView: RecyclerView
@@ -43,19 +46,26 @@ class HomeFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rvList)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter = EarthquakeAdapter(featureList)
+        adapter = EarthquakeAdapter(featureList, this)
         recyclerView.adapter = adapter
 
         //TODO: Set OnClickListener para las cells
+        //recyclerView.setOnClickListener(this)
+
         //To navigate to another fragment (--> EarthquakeDetail?)
         //findNavController().navigate(R.id.fragmentName)
 
         /*adapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
-            val intent = Intent(this, EarthquakeDetail::class.java)
+            //val intent = Intent(this, EarthquakeDetail::class.java)
             //TODO: Pasar los datos del feature desde aquí??
-            startActivity(intent)
+            //startActivity(intent)
         })*/
     }
+
+    /*override fun onClick(v: View?) {
+        TODO("Not yet implemented")
+        println("Clicked on a cell!!!")
+    }*/
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +124,20 @@ class HomeFragment : Fragment() {
 
     private fun showError() {
         Toast.makeText(activity, "There was an error.", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun recyclerviewClick(position: Int) {
+        //Inicio prueba: Carga de Earthquake Detail
+
+        //To navigate to another fragment (--> EarthquakeDetail?)
+        //findNavController().navigate(R.id.fragmentName)
+
+        //adapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
+        val intent = Intent (getActivity(), EarthquakeDetail::class.java)
+        getActivity()?.startActivity(intent)
+        //})
+        //Fin prueba: Carga de Earthquake Detail
+        adapter.notifyDataSetChanged()
     }
 
     //TODO: Revisar - Métodos para searchView
