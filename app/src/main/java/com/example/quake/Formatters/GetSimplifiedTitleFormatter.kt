@@ -2,7 +2,7 @@ package com.example.quake.Formatters
 
 class GetSimplifiedTitleFormatter {
 
-    fun getSimplifiedTitle(titleWithoutFormat: String?, place: String): String {
+    fun getSimplifiedTitle(titleWithoutFormat: String?, place: String?): String {
         var formattedTitle: String
         if (titleWithoutFormat?.contains(" of ") == true) {
             val delimiter = " of "
@@ -22,7 +22,11 @@ class GetSimplifiedTitleFormatter {
                 formattedTitle = "Unknown"
             }
         } else {
-            formattedTitle = place
+            if (place != null) {
+                formattedTitle = place
+            } else {
+                formattedTitle = "Unknown"
+            }
         }
         return formattedTitle
     }

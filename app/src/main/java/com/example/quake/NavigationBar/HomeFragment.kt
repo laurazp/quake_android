@@ -21,17 +21,11 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListener {
+class HomeFragment : Fragment(), RecyclerViewOnClickListener {
 
     private val featureList = mutableListOf<Feature>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EarthquakeAdapter
-
-    /*var listener: ((feature: Feature) -> Unit)? = null
-
-    fun sendCategoryToListener(feature: Feature) {
-        listener?.invoke(feature)
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +36,6 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initRecyclerView(view)
         getLastEarthquakes()
     }
@@ -54,32 +47,15 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
         recyclerView.setHasFixedSize(true)
         adapter = EarthquakeAdapter(featureList, this)
         recyclerView.adapter = adapter
-
-        //TODO: Set OnClickListener para las cells
-        //recyclerView.setOnClickListener(this)
-
-        //To navigate to another fragment (--> EarthquakeDetail?)
-        //findNavController().navigate(R.id.fragmentName)
-
-        /*adapter = EarthquakeAdapter(featureList, EarthquakeAdapter.OnClickListener {
-            //val intent = Intent(this, EarthquakeDetail::class.java)
-            //TODO: Pasar los datos del feature desde aquí??
-            //startActivity(intent)
-        })*/
     }
-
-    /*override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-        println("Clicked on a cell!!!")
-    }*/
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true) // It's important here
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(com.example.quake.R.menu.menu, menu)
+        inflater.inflate(R.menu.menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -136,13 +112,10 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
         //To navigate to another fragment (--> EarthquakeDetail?)
         //findNavController().navigate(R.id.fragmentName)
 
-        val intent = Intent (getActivity(), EarthquakeDetail::class.java)
-        //Send data to EarthquakeDetail activity
-        val selectedEarthquake: Feature = featureList[position]
-        intent.putExtra("EARTHQUAKE_TITLE", selectedEarthquake.properties.title)
-        //TODO: Pasar todo el feature?
-        //bundle.addParcelableExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
-        intent.putExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
+        //Send selected feature data to EarthquakeDetail Activity
+        val intent = Intent (activity, EarthquakeDetail::class.java)
+        val selectedFeature: Feature = featureList[position]
+        intent.putExtra("SELECTED_FEATURE", selectedFeature)
         activity?.startActivity(intent)
         adapter.notifyDataSetChanged()
     }
