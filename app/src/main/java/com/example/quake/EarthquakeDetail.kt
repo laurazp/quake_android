@@ -3,6 +3,9 @@ package com.example.quake
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quake.API.Models.Feature
 import com.example.quake.Formatters.GetSimplifiedTitleFormatter
@@ -11,65 +14,60 @@ import java.util.*
 class EarthquakeDetail : AppCompatActivity() {
 
     private val titleFormatter = GetSimplifiedTitleFormatter()
-    private var title: String? = "Unknown"
+    /*private var title: String? = "Unknown"
     private var place: String? = "Unknown"
     private lateinit var time: Date
     private var tsunami: Int = 0
-    private lateinit var coords: ArrayList<Int>
-    private var depth: Float = 0f
-    private var magnitude: Double? = 0.0
+    private lateinit var coords: String
+    private var depth: String? = "Unknown"
+    private var magnitude: Double? = 0.0*/
 
+    //View Labels
+    private lateinit var placeLabel: TextView
+    private lateinit var dateLabel: TextView
+    private lateinit var tsunamiLabel: TextView
+    private lateinit var coordsLabel: TextView
+    private lateinit var depthLabel: TextView
+    private lateinit var magnitudeLabel: TextView
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earthquake_detail)
 
-        //TODO: Get feature data from HomeFragment
-        val extras = intent.extras
-        this.title = extras?.getString("EARTHQUAKE_TITLE")
-        val feature: Feature? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.extras?.getParcelable("SELECTED_EARTHQUAKE", Feature::class.java)
-        } else {
-            intent.extras?.getParcelable("SELECTED_EARTHQUAKE")
-        }
-        /*val feature = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra("SELECTED_EARTHQUAKE", Feature::class.java)
-        } else {
-            intent.getParcelableExtra<Feature>("SELECTED_EARTHQUAKE")
-        }*/
+        //TODO: Es mejor implementar opciones según el SDK??
+        //Get selected feature data from HomeFragment
+        val selectedFeature = intent.getParcelableExtra("SELECTED_FEATURE", Feature::class.java)
 
+        configureUpperActionBar(selectedFeature!!)
+        initializeViewLabels()
+        bindEarthquake(selectedFeature)
+    }
+
+    private fun configureUpperActionBar(selectedFeature: Feature) {
         val display = supportActionBar
-        val formattedTitle = titleFormatter.getSimplifiedTitle(this.title, "Place")
-        //display?.title = formattedTitle
-        display?.title = feature?.properties?.title
-        display?.setDisplayHomeAsUpEnabled(true)
-
-        bindEarthquake()
+        display?.setDisplayHomeAsUpEnabled(true) //Show "Back" arrow
+        val formattedTitle = titleFormatter.getSimplifiedTitle(selectedFeature?.properties?.title, selectedFeature?.properties?.place)
+        display?.title = formattedTitle
     }
 
-    private fun bindEarthquake() {
-        //TODO: Configurar datos
-
-
-        /*val fragment = HomeFragment()
-        fragment.listener = { feature ->
-            this.title = feature.properties.title
-            this.place = feature.properties.place
-            //this.time = feature.properties.time
-            this.tsunami = feature.properties.tsunami!!
-            //this.coords =[feature.geometry.coordinates[0], feature.geometry.coordinates[1]]
-            //this.depth = feature.properties.depth
-            this.magnitude = feature.properties.mag
-            print(this.title)
-        }*/
-
-        /*this.title = title
-        this.place = place
-        this.time = time
-        this.tsunami = tsunami
-        this.coords = coords
-        this.depth = depth
-        this.magnitude = magnitude*/
+    private fun initializeViewLabels() {
+        placeLabel = findViewById(R.id.cellPlace)
+        dateLabel = findViewById(R.id.cellDate)
+        tsunamiLabel = findViewById(R.id.cellTsunami)
+        coordsLabel = findViewById(R.id.cellCoords)
+        depthLabel = findViewById(R.id.cellDepth)
+        magnitudeLabel = findViewById(R.id.cellMagnitude)
     }
+
+    private fun bindEarthquake(feature: Feature) {
+            placeLabel.text = feature.properties.place
+            //dateLabel.text = feature.properties.time
+            tsunamiLabel.text = feature.properties.tsunami.toString()!!
+            //coordsLabel.text =[feature.geometry.coordinates[0], feature.geometry.coordinates[1]]
+            depthLabel.text = feature.geometry.coordinates[2].toString()
+            magnitudeLabel.text = feature.properties.mag.toString()
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
@@ -80,31 +78,4 @@ class EarthquakeDetail : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    /*private var title: String
-    private var place: String?
-    private var time: Date
-    private var tsunami: Int
-    private var coords: ArrayList<Int>
-    private var depth: Float
-    private var magnitude: Double?
-
-    constructor(
-        title: String,
-        place: String?,
-        time: Date,
-        tsunami: Int,
-        coords: ArrayList<Int>,
-        depth: Float,
-        magnitude: Double?
-    ) {
-        this.title = title
-        this.place = place
-        this.time = time
-        this.tsunami = tsunami
-        this.coords = coords
-        this.depth = depth
-        this.magnitude = magnitude
-    }*/
-
 }

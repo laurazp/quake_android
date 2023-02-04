@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/infoCardView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="16dp"
@@ -22,49 +22,43 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp" >
 
-        <TextView
-            android:id="@+id/cellTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title" />
+            <TextView
+                android:id="@+id/cellPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Place" />
 
-        <TextView
-            android:id="@+id/cellPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Place" />
+            <TextView
+                android:id="@+id/cellDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date" />
 
-        <TextView
-            android:id="@+id/cellDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date" />
+            <TextView
+                android:id="@+id/cellTsunami"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tsunami" />
 
-        <TextView
-            android:id="@+id/cellTsunami"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tsunami" />
+            <TextView
+                android:id="@+id/cellCoords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Coords" />
 
-        <TextView
-            android:id="@+id/cellCoords"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Coords" />
+            <TextView
+                android:id="@+id/cellDepth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Depth" />
 
-        <TextView
-            android:id="@+id/cellDepth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Depth" />
+            <TextView
+                android:id="@+id/cellMagnitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Magnitude" />
 
-        <TextView
-            android:id="@+id/cellMagnitude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Magnitude" />
-
-    </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
