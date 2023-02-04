@@ -1,6 +1,10 @@
 package com.example.quake.Formatters
 
-class GetSimplifiedTitleFormatter {
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import androidx.core.text.bold
+
+class GetCustomTextFormatter {
 
     fun getSimplifiedTitle(titleWithoutFormat: String?, place: String?): String {
         var formattedTitle: String
@@ -29,5 +33,13 @@ class GetSimplifiedTitleFormatter {
             }
         }
         return formattedTitle
+    }
+
+    fun getSpannableString(label: String, content:String): SpannableStringBuilder {
+        val formattedString = SpannableStringBuilder()
+            .bold { append(label) }
+            .bold { append(": ") }
+            .append(content)
+        return formattedString
     }
 }
