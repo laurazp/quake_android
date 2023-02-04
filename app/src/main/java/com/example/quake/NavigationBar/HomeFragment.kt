@@ -141,8 +141,9 @@ class HomeFragment : Fragment(), /*OnClickListener,*/ RecyclerViewOnClickListene
         val selectedEarthquake: Feature = featureList[position]
         intent.putExtra("EARTHQUAKE_TITLE", selectedEarthquake.properties.title)
         //TODO: Pasar todo el feature?
-        //intent.putExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
-        getActivity()?.startActivity(intent)
+        //bundle.addParcelableExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
+        intent.putExtra("SELECTED_EARTHQUAKE", selectedEarthquake)
+        activity?.startActivity(intent)
         adapter.notifyDataSetChanged()
     }
 

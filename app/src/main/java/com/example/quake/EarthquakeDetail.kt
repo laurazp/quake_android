@@ -1,8 +1,10 @@
 package com.example.quake
 
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.quake.API.Models.Feature
 import com.example.quake.Formatters.GetSimplifiedTitleFormatter
 import java.util.*
 
@@ -24,10 +26,21 @@ class EarthquakeDetail : AppCompatActivity() {
         //TODO: Get feature data from HomeFragment
         val extras = intent.extras
         this.title = extras?.getString("EARTHQUAKE_TITLE")
+        val feature: Feature? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.extras?.getParcelable("SELECTED_EARTHQUAKE", Feature::class.java)
+        } else {
+            intent.extras?.getParcelable("SELECTED_EARTHQUAKE")
+        }
+        /*val feature = if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra("SELECTED_EARTHQUAKE", Feature::class.java)
+        } else {
+            intent.getParcelableExtra<Feature>("SELECTED_EARTHQUAKE")
+        }*/
 
         val display = supportActionBar
         val formattedTitle = titleFormatter.getSimplifiedTitle(this.title, "Place")
-        display?.title = formattedTitle
+        //display?.title = formattedTitle
+        display?.title = feature?.properties?.title
         display?.setDisplayHomeAsUpEnabled(true)
 
         bindEarthquake()
