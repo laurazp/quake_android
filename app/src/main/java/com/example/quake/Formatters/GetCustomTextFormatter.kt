@@ -1,8 +1,12 @@
 package com.example.quake.Formatters
 
+import android.annotation.SuppressLint
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import androidx.core.text.backgroundColor
 import androidx.core.text.bold
+import androidx.core.text.color
+import com.example.quake.R
 
 class GetCustomTextFormatter {
 
@@ -40,6 +44,15 @@ class GetCustomTextFormatter {
             .bold { append(label) }
             .bold { append(": ") }
             .append(content)
+        return formattedString
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun getSpannableStringWithColor(label: String, content:String, color: Int): SpannableStringBuilder {
+        val formattedString = SpannableStringBuilder()
+            .bold { append(label) }
+            .bold { append(": ") }
+            .bold { color(color, { append(content) }) }
         return formattedString
     }
 }

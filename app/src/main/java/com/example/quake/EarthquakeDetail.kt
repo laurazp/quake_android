@@ -1,5 +1,6 @@
 package com.example.quake
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,18 +9,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quake.API.Models.Feature
 import com.example.quake.Formatters.GetCustomTextFormatter
+import com.example.quake.Formatters.GetFormattedCoordsFormatter
+import com.example.quake.Formatters.GetMagnitudeColorFormatter
 import java.util.*
 
 class EarthquakeDetail : AppCompatActivity() {
 
     private val textFormatter = GetCustomTextFormatter()
-    /*private var title: String? = "Unknown"
-    private var place: String? = "Unknown"
-    private lateinit var time: Date
-    private var tsunami: Int = 0
-    private lateinit var coords: String
-    private var depth: String? = "Unknown"
-    private var magnitude: Double? = 0.0*/
+    private val getMagnitudeColorFormatter = GetMagnitudeColorFormatter()
+    private val getFormattedCoordsFormatter = GetFormattedCoordsFormatter()
 
     //View Labels
     private lateinit var placeLabel: TextView
@@ -60,19 +58,37 @@ class EarthquakeDetail : AppCompatActivity() {
     }
 
     private fun bindEarthquake(feature: Feature) {
+        //Place Label
+        if (feature.properties.place != null){
+            placeLabel.text = textFormatter.getSpannableString("Place", feature.properties.place!!)
+        } else {
+            placeLabel.text = textFormatter.getSpannableString("Place", "Unknown")
+        }
+        //Date Label
+        //dateLabel.text = textFormatter.getSpannableString("Date", feature.properties.time!!)
+        //Tsunami Label
         var tsunamiValue = ""
         if (feature.properties.tsunami == 0) {
             tsunamiValue = "No"
         } else {
             tsunamiValue = "Yes"
         }
-
-        placeLabel.text = textFormatter.getSpannableString("Place", feature.properties.place!!)
-        //dateLabel.text = textFormatter.getSpannableString("Date", feature.properties.time!!)
         tsunamiLabel.text = textFormatter.getSpannableString("Tsunami", tsunamiValue) //"Tsunami: $tsunamiValue"
-        //coordsLabel.text = "Coords: " + [feature.geometry.coordinates[0], feature.geometry.coordinates[1]]
-        depthLabel.text = textFormatter.getSpannableString("Depth", feature.geometry.coordinates[2].toString()) //TODO: + "km"
-        magnitudeLabel.text = textFormatter.getSpannableString("Magnitude", feature.properties.mag.toString())
+        //Coords Label
+        val coordsString = getFormattedCoordsFormatter.getFormattedCoords(feature.geometry.coordinates)
+        coordsLabel.text = textFormatter.getSpannableString("Coords", coordsString)
+        //Depth Label //TODO: + "km"
+        depthLabel.text = textFormatter.getSpannableString("Depth", feature.geometry.coordinates[2].toString())
+        //Magnitude Label
+        var magnitudeLevel = getMagnitudeColorFormatter.getMagnitudeLevel(feature.properties.mag!!)
+        when (magnitudeLevel) {
+            1 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#00FF00"))
+            2 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#FFA500"))
+            3 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#FF0000"))
+            else -> {
+                magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#0000FF"))
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/infoCardView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp">
 
@@ -19,39 +19,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
+            android:paddingLeft="20dp"
             android:paddingRight="16dp"
-            android:paddingTop="10dp" >
+            android:paddingTop="16dp" >
 
             <TextView
                 android:id="@+id/cellPlace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Place" />
+                android:text="Place"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/cellDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date" />
+                android:text="Date"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/cellTsunami"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tsunami" />
+                android:text="Tsunami"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/cellCoords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Coords" />
+                android:text="Coords"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/cellDepth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Depth" />
+                android:text="Depth"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/cellMagnitude"
@@ -66,7 +71,7 @@
         android:id="@+id/mapCardView"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/cardView"
-        android:layout_height="200dp"
+        android:layout_height="350dp"
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp">
     </androidx.cardview.widget.CardView>
