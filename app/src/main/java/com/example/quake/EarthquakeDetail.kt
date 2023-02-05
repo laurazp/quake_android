@@ -81,14 +81,7 @@ class EarthquakeDetail : AppCompatActivity() {
         depthLabel.text = textFormatter.getSpannableString("Depth", feature.geometry.coordinates[2].toString())
         //Magnitude Label
         var magnitudeLevel = getMagnitudeColorFormatter.getMagnitudeLevel(feature.properties.mag!!)
-        when (magnitudeLevel) {
-            1 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#00FF00"))
-            2 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#FFA500"))
-            3 -> magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#FF0000"))
-            else -> {
-                magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", feature.properties.mag.toString(), Color.parseColor("#0000FF"))
-            }
-        }
+        magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", (feature.properties.mag).toString(), magnitudeLevel)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
