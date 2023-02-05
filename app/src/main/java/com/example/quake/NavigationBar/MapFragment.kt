@@ -19,12 +19,12 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         //TODO: Añadir aquí código para mostrar en el fragment
-        val viewPager = activity?.findViewById<ViewPager2>(R.id.nav_graph)
+        //val viewPager = activity?.findViewById<ViewPager2>(R.id.nav_graph)
 
-        view.button.setOnClickListener {
+        /*view.button.setOnClickListener {
             println("Click en Return")
             //viewPager?.currentItem = 0
-        }
+        }*/
 
         return view
     }
