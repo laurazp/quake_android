@@ -78,7 +78,7 @@ class EarthquakeDetail : AppCompatActivity() {
         val coordsString = getFormattedCoordsFormatter.getFormattedCoords(feature.geometry.coordinates)
         coordsLabel.text = textFormatter.getSpannableString("Coords", coordsString)
         //Depth Label //TODO: + "km"
-        depthLabel.text = textFormatter.getSpannableString("Depth", feature.geometry.coordinates[2].toString())
+        depthLabel.text = textFormatter.getDepthSpannableString("Depth", feature.geometry.coordinates[2])
         //Magnitude Label
         var magnitudeLevel = getMagnitudeColorFormatter.getMagnitudeLevel(feature.properties.mag!!)
         magnitudeLabel.text = textFormatter.getSpannableStringWithColor("Magnitude", (feature.properties.mag).toString(), magnitudeLevel)

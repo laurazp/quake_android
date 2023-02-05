@@ -55,4 +55,13 @@ class GetCustomTextFormatter {
             .bold { color(color, { append(content) }) }
         return formattedString
     }
+
+    fun getDepthSpannableString(label: String, content:Float): SpannableStringBuilder {
+        val formattedString = SpannableStringBuilder()
+            .bold { append(label) }
+            .bold { append(": ") }
+            .append(String.format("%.2f", content))
+            .append("km")
+        return formattedString
+    }
 }
