@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quake.API.Models.Feature
 import com.example.quake.Formatters.GetCustomTextFormatter
+import com.example.quake.Formatters.GetDateFormatter
 import com.example.quake.Formatters.GetFormattedCoordsFormatter
 import com.example.quake.Formatters.GetMagnitudeColorFormatter
 import java.util.*
@@ -16,6 +17,7 @@ import java.util.*
 class EarthquakeDetail : AppCompatActivity() {
 
     private val textFormatter = GetCustomTextFormatter()
+    private val getDateFormatter = GetDateFormatter()
     private val getMagnitudeColorFormatter = GetMagnitudeColorFormatter()
     private val getFormattedCoordsFormatter = GetFormattedCoordsFormatter()
 
@@ -57,6 +59,7 @@ class EarthquakeDetail : AppCompatActivity() {
         magnitudeLabel = findViewById(R.id.cellMagnitude)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun bindEarthquake(feature: Feature) {
         //Place Label
         if (feature.properties.place != null){
@@ -65,7 +68,8 @@ class EarthquakeDetail : AppCompatActivity() {
             placeLabel.text = textFormatter.getSpannableString("Place", "Unknown")
         }
         //Date Label
-        //dateLabel.text = textFormatter.getSpannableString("Date", feature.properties.time!!)
+        val formattedTime = getDateFormatter.formatDateToStringWithGmt(feature.properties.time!!)
+        dateLabel.text = textFormatter.getSpannableString("Date", formattedTime.toString())
         //Tsunami Label
         var tsunamiValue = ""
         if (feature.properties.tsunami == 0) {
