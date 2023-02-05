@@ -31,7 +31,7 @@ class Earthquakes : AppCompatActivity() {
         setContentView(binding.root)
 
         //Set up NavBar
-        val navHostFragment = supportFragmentManager.findFragmentById(com.example.quake.R.id.mainContainer) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment
         navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(com.example.quake.R.id.bottomNavigationView)
         setupWithNavController(bottomNavigationView, navController)

@@ -19,8 +19,6 @@ class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerV
 
         //Binding method
         fun bind(feature: Feature) {
-            //binding.cellTitle.text =  feature.properties.title
-
             if (feature.properties.title != null) {
                 if (feature.properties.place != null) {
                     binding.cellTitle.text = feature.properties.title
