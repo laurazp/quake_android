@@ -11,7 +11,7 @@ class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerV
 
     private var listener: RecyclerViewOnClickListener = listener
 
-    //View holder inner class
+    //ViewHolder inner class
     inner class EarthquakeViewHolder(view: View, listener: RecyclerViewOnClickListener) : RecyclerView.ViewHolder(view) {
 
         private val binding = CellBinding.bind(view)
@@ -19,13 +19,17 @@ class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerV
 
         //Binding method
         fun bind(feature: Feature) {
-            binding.cellTitle.text =  feature.properties.title
+            //binding.cellTitle.text =  feature.properties.title
 
-            /*if (feature.properties.title != null) {
-                binding.cellTitle.text = feature.properties.title
+            if (feature.properties.title != null) {
+                if (feature.properties.place != null) {
+                    binding.cellTitle.text = feature.properties.title
+                } else {
+                    binding.cellTitle.text = feature.properties.title + "Unknown"
+                }
             } else {
                 binding.cellTitle.text = "Unknown"
-            }*/
+            }
         }
     }
 
@@ -38,7 +42,6 @@ class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerV
         val feature: Feature = features[position]
         holder.bind(feature)
         holder.itemView.setOnClickListener {
-            //onClickListener.onClick(feature)
             this.listener.recyclerviewClick(position)
         }
     }
@@ -46,8 +49,4 @@ class EarthquakeAdapter(private val features: List<Feature>, listener: RecyclerV
     override fun getItemCount(): Int {
         return features.size
     }
-
-    /*class OnClickListener(val clickListener: (feature: Feature) -> Unit) {
-        fun onClick(feature: Feature) = clickListener(feature)
-    }*/
 }
