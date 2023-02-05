@@ -14,32 +14,16 @@
         android:layout_marginTop="10dp"
         app:cardCornerRadius="16dp">
 
-        <!--<LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">-->
-
         <TextView
             android:id="@+id/cellTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Title"
             android:paddingLeft="10dp"
-            android:paddingTop="10dp" />
-
-        <!--<TextView
-            android:id="@+id/cellPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/cellDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>-->
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"/>
 
     </androidx.cardview.widget.CardView>
 </layout>
