@@ -44,7 +44,6 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(view)
         getLastEarthquakes()
-        //saveData()
     }
 
     private fun initRecyclerView(view: View) {
@@ -89,6 +88,7 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
                     featureList.clear()
                     featureList.addAll(features)
                     adapter.notifyDataSetChanged()
+                    saveData()
                 } else {
                     showError()
                 }
@@ -117,6 +117,7 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
                     featureList.clear()
                     featureList.addAll(features)
                     adapter.notifyDataSetChanged()
+                    saveData()
                 } else {
                     showError()
                 }
