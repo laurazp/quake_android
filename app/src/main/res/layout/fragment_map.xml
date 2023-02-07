@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NavigationBar.MapFragment">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         class="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map_fragment"
         android:layout_width="match_parent"

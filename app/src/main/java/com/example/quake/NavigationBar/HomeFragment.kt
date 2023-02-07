@@ -1,9 +1,12 @@
 package com.example.quake.NavigationBar
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.*
-import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
@@ -15,11 +18,14 @@ import com.example.quake.EarthquakeAdapter
 import com.example.quake.EarthquakeDetail
 import com.example.quake.R
 import com.example.quake.RecyclerViewOnClickListener
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class HomeFragment : Fragment(), RecyclerViewOnClickListener {
 
@@ -38,6 +44,7 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView(view)
         getLastEarthquakes()
+        //saveData()
     }
 
     private fun initRecyclerView(view: View) {
@@ -66,8 +73,12 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
             .build()
     }
 
-    private fun getLastEarthquakes() {
-        CoroutineScope(Dispatchers.IO).launch {
+    fun getLastEarthquakes() {
+        val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+            throwable.printStackTrace()
+        }
+
+        CoroutineScope(Dispatchers.IO + coroutineExceptionHandler).launch {
             //val call = getRetrofit().create(APIService::class.java).getEarthquakes("query?format=geojson&starttime=${current}&endtime=${endDate}&limit=${selectedPageSize}&offset=${actualOffset}")
             val call = getRetrofit().create(APIService::class.java).getEarthquakes("query?format=geojson&starttime=2023-01-01&endtime=2023-01-05")
             val features = call.body()
@@ -83,6 +94,15 @@ class HomeFragment : Fragment(), RecyclerViewOnClickListener {
                 }
             })
         }
+    }
+
+    private fun saveData() {
+        val mPrefs: SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val prefsEditor: SharedPreferences.Editor = mPrefs.edit()
+        val gson = Gson()
+        val json: String = gson.toJson(this.featureList)
+        prefsEditor.putString("SelectedFeaturesList", json)
+        prefsEditor.commit()
     }
 
     private fun searchByDate(startTime: String, endTime: String, selectedPageSize: Int, actualOffset: Int) {
