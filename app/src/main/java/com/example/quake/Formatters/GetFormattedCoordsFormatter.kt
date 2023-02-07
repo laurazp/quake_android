@@ -1,5 +1,7 @@
 package com.example.quake.Formatters
 
+import com.google.android.gms.maps.model.LatLng
+
 class GetFormattedCoordsFormatter {
 
     fun getFormattedCoords(actualCoords: List<Float>): String {
@@ -21,5 +23,12 @@ class GetFormattedCoordsFormatter {
         }
 
         return "$longitudeString, $latitudeString"
+    }
+
+    fun getFormattedLatLngCoords(actualCoords: List<Float>): LatLng {
+        val actualLatitude = actualCoords[0]
+        val actualLongitude = actualCoords[1]
+        return LatLng(actualLatitude.toDouble(), actualLongitude.toDouble())
+        print(LatLng(actualLatitude.toDouble(), actualLongitude.toDouble()))
     }
 }
